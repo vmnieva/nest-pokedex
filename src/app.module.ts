@@ -21,7 +21,9 @@ import { JoiValidationSchema } from './config/joi.validation';
     }),
 
     // Conecta la aplicación con la base de datos MongoDB local usando Mongoose
-    MongooseModule.forRoot(process.env.MONGODB!), 
+    MongooseModule.forRoot(process.env.MONGODB!,{
+      dbName: 'pokemonsdb'
+    }), 
     //La admiracion es porque puede ser undefined y eso no puede ocurrir, 
     //para indicar que no va a ser undefined se pone !
 
