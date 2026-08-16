@@ -30,9 +30,9 @@ export class PokemonService {
 
   }
 
-  // Método pendiente o inicial para retornar todos los pokemons
-  findAll() {
-    return `This action returns all pokemon`;
+  // Método para retornar todos los pokemons
+  async findAll() {
+    return await this.pokemonModel.find();
   }
 
   // Busca un Pokémon por número, ID de MongoDB o por nombre
