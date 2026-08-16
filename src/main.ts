@@ -22,7 +22,7 @@ async function main() {
   );
 
   // Inicia la aplicación en el puerto configurado (por defecto el 3000)
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
   
 }
 main();
