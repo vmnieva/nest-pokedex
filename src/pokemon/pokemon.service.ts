@@ -5,15 +5,21 @@ import { Pokemon } from './entities/pokemon.entity';
 import { isValidObjectId, Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { PaginatioDto } from 'src/common/dto/pagination.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PokemonService {
+
+  private defaultLimit: number;
 
   // Inyecta el modelo de Mongoose para interactuar con la colección de Pokemons en MongoDB
   constructor(
     @InjectModel(Pokemon.name)
     private readonly pokemonModel: Model<Pokemon>,
-  ){}
+    private readonly configService: ConfigService
+  ){
+    this.defaultLimit = configService.getOrThrow<number>('defaultLimit');
+  }
 
   // Crea un nuevo Pokémon en la base de datos manejando errores de duplicados (código 11000)
   async create(createPokemonDto: CreatePokemonDto) {
@@ -33,7 +39,7 @@ export class PokemonService {
 
   // Método para retornar todos los pokemons
   async findAll(paginatioDto: PaginatioDto) {
-    const {limit = 10, offset = 0} = paginatioDto;
+    const {limit = this.defaultLimit, offset = 0} = paginatioDto;
     return await this.pokemonModel.find()
     .limit(limit)
     .skip(offset)
