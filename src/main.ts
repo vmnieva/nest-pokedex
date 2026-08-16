@@ -14,6 +14,10 @@ async function main() {
     new ValidationPipe({
       whitelist: true, // Elimina propiedades que no estén en los DTOs
       forbidNonWhitelisted: true, // Lanza error si envían propiedades no permitidas
+      transform: true,
+      transformOptions:{
+        enableImplicitConversion: true
+      }
     })
   );
 

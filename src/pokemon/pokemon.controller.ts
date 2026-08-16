@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, Query } from '@nestjs/common';
 import { PokemonService } from './pokemon.service';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { PasrseMongoIdPipe } from 'src/common/pipes/pasrse-mongo-id/pasrse-mongo-id.pipe';
+import { PaginatioDto } from 'src/common/dto/pagination.dto';
 
 // Define la ruta base para este controlador: /api/v2/pokemon
 @Controller('pokemon')
@@ -18,8 +19,8 @@ export class PokemonController {
 
   // Endpoint GET para obtener todos los Pokémon
   @Get()
-  findAll() {
-    return this.pokemonService.findAll();
+  findAll(@Query() paginatioDto: PaginatioDto) {
+    return this.pokemonService.findAll(paginatioDto);
   }
 
   // Endpoint GET para buscar un Pokémon por término (id, no o nombre)

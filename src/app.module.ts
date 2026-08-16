@@ -20,8 +20,9 @@ import { SeedModule } from './seed/seed.module';
     PokemonModule,
 
     CommonModule,
-
-    SeedModule
+    
+    SeedModule,
+    
   ],
 })
 export class AppModule {}

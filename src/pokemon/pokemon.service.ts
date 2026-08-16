@@ -4,6 +4,7 @@ import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { Pokemon } from './entities/pokemon.entity';
 import { isValidObjectId, Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { PaginatioDto } from 'src/common/dto/pagination.dto';
 
 @Injectable()
 export class PokemonService {
@@ -31,8 +32,15 @@ export class PokemonService {
   }
 
   // Método para retornar todos los pokemons
-  async findAll() {
-    return await this.pokemonModel.find();
+  async findAll(paginatioDto: PaginatioDto) {
+    const {limit = 10, offset = 0} = paginatioDto;
+    return await this.pokemonModel.find()
+    .limit(limit)
+    .skip(offset)
+    .sort({
+      no:1
+    })
+    .select('-__v');
   }
 
   // Busca un Pokémon por número, ID de MongoDB o por nombre
